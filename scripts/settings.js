@@ -1,10 +1,11 @@
 let CHESSAPP = {};
+require("dotenv").config();
 
 CHESSAPP.globalSettings = {
   imageDir: "images/",
   debug: false,
   live: false,
-  port: 5800,
+  port: process.env.PORT,
   host: "http://livechess.herokuapp.com",
 };
 
