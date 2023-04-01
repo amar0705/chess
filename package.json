@@ -1,8 +1,28 @@
 {
-	"name": "chess",
-	"version": "0.0.1",
-	"dependencies": {
-		"package.json": "^2.0.1",
-		"socket.io": "2.3.0"
-	}
+  "name": "chess",
+  "version": "0.0.1",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22",
+    "package.json": "^2.0.1",
+    "socket.io": "2.3.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon index.js"
+  },
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amar0705/chess.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amar0705/chess/issues"
+  },
+  "homepage": "https://github.com/amar0705/chess#readme",
+  "description": ""
 }

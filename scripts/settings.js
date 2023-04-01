@@ -5,7 +5,7 @@ CHESSAPP.globalSettings = {
   debug: false,
   live: false,
   port: 5800,
-  host: "http://livechess.herokuapp.com",
+  // host: "http://livechess.herokuapp.com",
 };
 
 let gameSettings = {
