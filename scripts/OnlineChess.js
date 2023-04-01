@@ -6,7 +6,7 @@ CHESSAPP.onlinePlay = {
     if (CHESSAPP.globalSettings.live) {
       hostPort = CHESSAPP.globalSettings.host;
     }
-    this.sk = io.connect(hostPort);
+    this.sk = io.connect(hostPort, { transports: ["websocket"] });
     CHESSAPP.ui.statusUpdate({ type: "fb", msg: "Searching for player 1..." });
     this.sk.emit("setup", { color: stg.preferredColor });
     this.sk.on("chat", function (data) {

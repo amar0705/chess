@@ -213,7 +213,7 @@ Game.prototype = {
   },
 };
 
-io.sockets.on("connection", function (sk) {
+io.sockets.on("connection", { transports: ["websocket"] }, function (sk) {
   let w = null,
     b = null,
     skColor = false;
