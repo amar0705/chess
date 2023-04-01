@@ -8,7 +8,6 @@ let app = require("http").createServer(handler),
     B: [],
     U: [],
   };
-
 app.listen(port);
 console.log("Listening to port " + port);
 function handler(req, resp) {
