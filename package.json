@@ -9,8 +9,7 @@
     "socket.io": "2.3.0"
   },
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon index.js"
+    "start": "node server.js"
   },
   "main": "server.js",
   "repository": {
