@@ -1,4 +1,3 @@
-require("dotenv").config();
 let app = require("http").createServer(handler),
   io = require("socket.io").listen(app),
   fs = require("fs"),
