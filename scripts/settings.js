@@ -5,7 +5,6 @@ CHESSAPP.globalSettings = {
   debug: false,
   live: false,
   port: 5800,
-  // host: "http://livechess.herokuapp.com",
   host: "https://chess-2par.onrender.com",
 };
 
