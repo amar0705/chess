@@ -1,3 +1,5 @@
+// Setting up the chessboard
+
 CHESSAPP.ui = (function () {
   let that = {},
     chessboard = null,
@@ -27,6 +29,8 @@ CHESSAPP.ui = (function () {
     rightCol.className = "rightCol";
     container.appendChild(rightCol);
   };
+
+  // chatbox
   let createChat = function (chatID) {
     chatContainer = document.createElement("div");
     chatContainer.className = "chat";
