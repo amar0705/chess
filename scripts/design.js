@@ -24,33 +24,41 @@ CHESSAPP.ui = (function () {
     initSub = null,
     elementsCreated = false;
 
+  // Create the right column of the chessboard
   let createRightCol = function () {
     rightCol = document.createElement("div");
     rightCol.className = "rightCol";
     container.appendChild(rightCol);
   };
 
-  // chatbox
+  // Create the chatbox
   let createChat = function (chatID) {
     chatContainer = document.createElement("div");
     chatContainer.className = "chat";
     chatInput = document.createElement("input");
     chatWindow = document.createElement("div");
     chatWindow.className = "chatContainer";
+    // Set up chat input events
     let cw = chatWindow,
       ci = chatInput,
       def = "Write something here...";
     ci.value = def;
+
+    // Handle focus event on chat input
     CHESSAPP.utils.bind(ci, "focus", function (e) {
       if (ci.value == def) {
         ci.value = "";
       }
     });
+
+    // Handle blur event on chat input
     CHESSAPP.utils.bind(ci, "blur", function (e) {
       if (ci.value == "") {
         ci.value = def;
       }
     });
+
+    // Handle keypress event on chat input
     CHESSAPP.utils.bind(ci, "keypress", function (e) {
       let key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : e.which ? e.which : 0;
       if (key == "13") {
@@ -58,21 +66,29 @@ CHESSAPP.ui = (function () {
         ci.value = "";
       }
     });
+
     let header = document.createElement("h2");
     header.appendChild(document.createTextNode("Messages"));
+    // Append elements to chat container
     chatContainer.appendChild(header);
     chatContainer.appendChild(cw);
     chatContainer.appendChild(ci);
     rightCol.appendChild(chatContainer);
   };
+
+  // Activate the chatbox
   let activateChat = function () {
     chatActive = true;
     CHESSAPP.utils.addClass(chatContainer, "active");
   };
+
+  // Deactivate the chatbox
   let deactivateChat = function () {
     chatActive = false;
     CHESSAPP.utils.removeClass(chatContainer, "active");
   };
+
+  // Create the move list
   let createMovelist = function () {
     let moveListContainer = document.createElement("div"),
       moveListScroll = document.createElement("div"),
@@ -81,6 +97,7 @@ CHESSAPP.ui = (function () {
     breakEl = document.createElement("br");
     header.appendChild(document.createTextNode("Moves"));
     moveListContainer.className = "movelist";
+    // Append elements to move list container
     moveListScroll.className = "scroll";
     moveListScroll.appendChild(moveList);
     moveListContainer.appendChild(header);
@@ -90,6 +107,8 @@ CHESSAPP.ui = (function () {
     moveList.appendChild(moveListCurRow);
     rightCol.appendChild(moveListContainer);
   };
+
+  // Create the overlay screens
   let createOverlay = function () {
     let wrapper = document.getElementById("wrapper");
     overlay = document.createElement("div");
@@ -99,6 +118,8 @@ CHESSAPP.ui = (function () {
     createColor();
     createInitial();
   };
+
+  // Create the selections
   let createSelection = function () {
     let selection = document.createElement("div"),
       frag = document.createDocumentFragment(),
@@ -125,6 +146,8 @@ CHESSAPP.ui = (function () {
     selection = selection;
     overlayScreens["selection"] = { elem: selection };
   };
+
+  // Creating the color options
   let createColor = function () {
     let color = document.createElement("div"),
       frag = document.createDocumentFragment(),
@@ -158,6 +181,8 @@ CHESSAPP.ui = (function () {
     color = color;
     overlayScreens["color"] = { elem: color };
   };
+
+  // Initializing
   createInitial = function () {
     let initial = document.createElement("div"),
       frag = document.createDocumentFragment(),
@@ -182,7 +207,9 @@ CHESSAPP.ui = (function () {
     initial = initial;
     overlayScreens["initial"] = { elem: initial };
   };
+
   let createStatus = function (statusID) {
+    // Create the status window
     (status = document.createElement("div")),
       (arrow_up = document.createElement("a")),
       (arrow_down = document.createElement("a"));
@@ -212,6 +239,8 @@ CHESSAPP.ui = (function () {
     }
     initSub.apply(window, [{ color: preferredColor, online: online }]);
   };
+
+  // Toggle the overlay screen
   let toggleOverlay = function (val, screen) {
     overlay.style.display = val ? "block" : "none";
     for (let i in overlayScreens) {
@@ -223,6 +252,8 @@ CHESSAPP.ui = (function () {
       overlayScreens[screen].elem.style.display = "block";
     }
   };
+
+  // Draw the chessboard cells
   let drawCells = function () {
     (chessboard = document.createElement("div")),
       (frag = document.createDocumentFragment()),
@@ -260,9 +291,12 @@ CHESSAPP.ui = (function () {
     CHESSAPP.utils.bind(chessboard, "click", CHESSAPP.ui.boardClicked);
     return cells;
   };
+
+  // Initialize the chessboard UI
   that.init = function (stg) {
     container = stg.container;
     if (!elementsCreated) {
+      // Create the necessary UI elements if they haven't been created yet
       createStatus();
       createOverlay();
       createRightCol();
@@ -273,6 +307,8 @@ CHESSAPP.ui = (function () {
     toggleOverlay(true, "initial");
     return drawCells();
   };
+
+  // Add the types chat messagew into the box
   that.addChatMessage = function (stg) {
     let prefix = stg.color == "W" ? "White - " : stg.color == "B" ? "Black - " : "",
       p = document.createElement("p"),
@@ -281,6 +317,7 @@ CHESSAPP.ui = (function () {
     chatWindow.appendChild(p);
     chatWindow.scrollTop = chatWindow.scrollHeight;
   };
+
   that.addMove = function (txt) {
     let cell = document.createElement("td");
     if (CHESSAPP.GamePlay.getTurn() == "B") {
@@ -297,10 +334,13 @@ CHESSAPP.ui = (function () {
       moveList.appendChild(moveListCurRow);
     }
   };
+
+  // Update the status
   that.statusUpdate = function (stg) {
     stg.showTime = true;
     statusWindow.add(stg);
   };
+
   that.drawPieces = function (pieces, cells) {
     let i = 0,
       max = pieces.length;
@@ -312,13 +352,16 @@ CHESSAPP.ui = (function () {
       cells[p.x][p.y].reference.appendChild(img);
     }
   };
+
   that.addPiece = function (piece, cell) {
     cell.reference.appendChild(piece.reference);
   };
+
   that.updatePiece = function (piece) {
     let p = piece;
     p.reference.src = CHESSAPP.globalSettings.imageDir + p.color + "_" + p.pieceType + ".png";
   };
+
   that.addOptionStyles = function (cell, userSettings) {
     let stg = {
       attackable: true,
@@ -334,13 +377,16 @@ CHESSAPP.ui = (function () {
       CHESSAPP.utils.addClass(cell.reference, "movable");
     }
   };
+
   that.clearOptionStyles = function (cell) {
     CHESSAPP.utils.removeClass(cell.reference, "movable");
     CHESSAPP.utils.removeClass(cell.reference, "attackable");
   };
+
   that.onInitialChoice = function (callback) {
     initSub = callback;
   };
+
   that.setSelectionVisible = function (stg) {
     let val = stg.val;
     if (val) {
@@ -352,6 +398,7 @@ CHESSAPP.ui = (function () {
       toggleOverlay(false, "selection");
     }
   };
+
   that.modeClicked = function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -372,6 +419,7 @@ CHESSAPP.ui = (function () {
       readyToPlay();
     }
   };
+
   that.preferredClicked = function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -389,6 +437,7 @@ CHESSAPP.ui = (function () {
       toggleOverlay(false);
     }
   };
+
   that.promotionClicked = function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -403,6 +452,7 @@ CHESSAPP.ui = (function () {
     }
     return false;
   };
+
   that.boardClicked = function (e) {
     let x,
       y,
