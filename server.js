@@ -9,7 +9,6 @@ let app = require("http").createServer(handler),
     U: [],
   };
 app.listen(port);
-console.log("Listening to port " + port);
 function handler(req, resp) {
   let r_url = url.parse(req.url);
   if (r_url.pathname.substring(1) === "getport") {
@@ -89,9 +88,7 @@ let GameList = (function () {
   };
 
   that.removeGame = function (gid) {
-    console.log("Remove from game" + gid);
     if (rear == null) {
-      console.log("Removing game from null list");
       return;
     }
 
@@ -101,7 +98,6 @@ let GameList = (function () {
 
     do {
       if (ptr.obj.gid == gid) {
-        console.log("Removing game " + gid);
         if (ptr.next == ptr) {
           rear = null;
         } else {
@@ -121,7 +117,6 @@ let GameList = (function () {
   };
   that.showGames = function () {
     if (rear == null) {
-      console.log("The list is empty");
       return;
     }
     let ptr = rear.next;
@@ -130,7 +125,6 @@ let GameList = (function () {
       str += ptr.obj.gid + " ";
       ptr = ptr.next;
     } while (ptr != rear.next);
-    console.log(str);
   };
   return that;
 })();
@@ -143,9 +137,6 @@ let Game = function (w, b, gid) {
   that.bPlayer = b;
   that.gid = gid;
   that.waitingForPromotion = false;
-
-  console.log("Game started");
-
   that.wPlayer.removeAllListeners("disconnect");
   that.bPlayer.removeAllListeners("disconnect");
 
@@ -178,13 +169,11 @@ let Game = function (w, b, gid) {
   });
 
   that.wPlayer.on("movemade", function (data) {
-    console.log("White player played");
     if (!disconnected) {
       that.bPlayer.emit("opposing_move", data);
     }
   });
   that.bPlayer.on("movemade", function (data) {
-    console.log("Black player played");
     if (!disconnected) {
       that.wPlayer.emit("opposing_move", data);
     }
@@ -217,17 +206,14 @@ io.sockets.on("connection", function (sk) {
   let w = null,
     b = null,
     skColor = false;
-  console.log("Web socket connection established");
 
   sk.on("setup", function (data) {
     sk.on("disconnect", function () {
       if (!!queue[skColor]) {
         let index = queue[skColor].indexOf(sk);
-        console.log("Removing player from queue");
         queue[skColor].splice(index, 1);
       }
     });
-    console.log(data);
     skColor = data.color;
     if (!skColor) {
       skColor = "U";

@@ -12,7 +12,6 @@ CHESSAPP.utils = (function () {
   };
   this.bm_end = function () {
     let difference = Date.now() - benchmark.timeStart;
-    console.log(benchmark.msg + " - " + difference);
   };
   this.bind = null;
   this.removeClass = function (elem, className) {
@@ -53,7 +52,6 @@ CHESSAPP.utils = (function () {
   };
   this.bm_end = function () {
     let difference = Date.now() - benchmark.timeStart;
-    console.log(benchmark.msg + " - " + difference);
   };
   this.bind = null;
   this.removeClass = function (elem, className) {

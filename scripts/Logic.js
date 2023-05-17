@@ -56,7 +56,6 @@ CHESSAPP.Analyzer = {
           resp.kingInCheck = r.checkDetected;
         }
       }
-      console.log("HERE : ", r);
       resp.allOptions[whiteKingIndex] = resp.allOptions[whiteKingIndex].concat(r.pieceOptions);
     }
     if (resp.kingInCheck != "B") {
@@ -132,7 +131,6 @@ CHESSAPP.Analyzer = {
       }
       if (r.valid) {
         if (stg.castleTest) {
-          console.log("Adding castle", r);
         }
         if (!stg.checkTest) {
           if (piece.color == "B") {
@@ -271,15 +269,11 @@ CHESSAPP.Analyzer = {
             mk(curx + 2, cury, true, false, special);
           }
           if (leftCastle && !stg.checkTest) {
-            console.log(leftCastle + " for castling color " + piece.color + " left");
           } else if (!leftCastle && !stg.checkTest) {
-            console.log(leftCastle + " for castling color " + piece.color + " left");
           }
 
           if (rightCastle && !stg.checkTest) {
-            console.log(rightCastle + " for castling color " + piece.color + " right");
           } else if (!rightCastle && !stg.checkTest) {
-            console.log(rightCastle + " for castling color " + piece.color + " right");
           }
         } else {
           mk(curx - 1, cury + 1, true, true);
@@ -403,8 +397,6 @@ CHESSAPP.Analyzer = {
         checkTest: stg.checkTest,
       });
       if (!stg.checkTest) {
-        console.log("Checking en passant piece");
-        console.log(pieceExists);
       }
     } else if (special.type == "castle") {
       resp.movable = true;

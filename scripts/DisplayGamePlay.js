@@ -9,7 +9,6 @@ CHESSAPP.GamePlay = (function () {
     overrides = {},
     selectedPieceIndex = -1;
   let toFile = function (num) {
-    console.log(65 + num);
     return String.fromCharCode(96 + parseInt(num));
   };
   let toAbbr = function (pieceType) {
@@ -41,7 +40,6 @@ CHESSAPP.GamePlay = (function () {
     let tos = "";
     that.moveList.push(move);
     if (move.promotion) {
-      console.log("HERE");
       tos += toFile(parseInt(move.fromX) + 1);
       tos += 8 - parseInt(move.toY);
       tos += "=";
@@ -58,7 +56,6 @@ CHESSAPP.GamePlay = (function () {
       tos += 8 - parseInt(move.toY);
     }
     CHESSAPP.ui.addMove(tos);
-    console.log("Move notation: " + tos);
   };
   that.statusUpdate = function (stg) {
     CHESSAPP.ui.statusUpdate(stg);
@@ -144,7 +141,6 @@ CHESSAPP.GamePlay = (function () {
     CHESSAPP.utils.extend(_settings, userSettings);
     let container = document.getElementById(_settings["containerID"]);
     if (container == null) {
-      console.log("container element not found with id: " + _settings["containerID"]);
       return false;
     }
     let p = {
@@ -154,16 +150,13 @@ CHESSAPP.GamePlay = (function () {
     that.cells = CHESSAPP.ui.init(p);
     that.lock();
     CHESSAPP.ui.onInitialChoice(function (pref) {
-      console.log(pref);
       if (pref.hasOwnProperty("color")) {
         _settings.preferredColor = pref.color;
       }
       if (pref.hasOwnProperty("online")) {
         _settings.online = pref.online;
       }
-      console.log(_settings);
       if (_settings.online) {
-        console.log("connecting...");
         CHESSAPP.onlinePlay.connect(_settings, function () {
           that.setUpBoard.apply(that);
         });
@@ -312,8 +305,6 @@ CHESSAPP.GamePlay = (function () {
       check = false,
       checkmate = false;
     options = response.allOptions;
-    console.log("Options recieved: ");
-    console.log(options);
     for (let i = 0; i < options.length; i++) {
       if (!that.pieces[i]) {
         continue;
@@ -358,10 +349,6 @@ CHESSAPP.GamePlay = (function () {
     if (check || checkmate || stalemate) {
       that.statusUpdate({ msg: msg, type: type });
     }
-    console.log("Status : ");
-    console.log("Check : " + check);
-    console.log("Stalemate : " + stalemate);
-    console.log("Checkmate : " + checkmate);
   };
   that.movePieceTo = function (stg) {
     let piece = stg.piece,
@@ -396,7 +383,6 @@ CHESSAPP.GamePlay = (function () {
       }
     }
     if (stg.special != null) {
-      console.log("Special move!", stg.special);
       if (stg.special.type == "en") {
         pieceAtLocation = CHESSAPP.Analyzer.pieceExists({
           pieces: that.pieces,
@@ -404,7 +390,6 @@ CHESSAPP.GamePlay = (function () {
           y: stg.special.eny,
         });
       } else if (stg.special.type == "castle") {
-        console.log("Castling");
         let rook = CHESSAPP.Analyzer.pieceExists({
           pieces: that.pieces,
           x: stg.special.rookx,
@@ -422,7 +407,6 @@ CHESSAPP.GamePlay = (function () {
         moveData.killed = true;
         that.killPiece(pieceAtLocation);
       } else {
-        console.log("Invalid move cannot move on another piece of same color");
         return;
       }
     }
@@ -485,7 +469,6 @@ CHESSAPP.GamePlay = (function () {
       }
     });
   that.onlineMove = function (data) {
-    console.log(data);
     let pieceMoved = CHESSAPP.Analyzer.pieceExists({
       pieces: that.pieces,
       x: data.pieceX,

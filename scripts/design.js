@@ -278,7 +278,6 @@ CHESSAPP.ui = (function () {
     chatWindow.scrollTop = chatWindow.scrollHeight;
   };
   that.addMove = function (txt) {
-    console.log("Showing move:" + txt);
     let cell = document.createElement("td");
     if (CHESSAPP.GamePlay.getTurn() == "B") {
       cell.appendChild(document.createTextNode("" + rowCount + "."));
@@ -377,9 +376,7 @@ CHESSAPP.ui = (function () {
     if (src.nodeName.toLowerCase() == "a") {
       let val = src.getAttribute("data-color");
       if (val) {
-        console.log(val + " color");
         if (initSub == null) {
-          console.log("Init sub is null");
         } else {
           preferredColor = val;
           readyToPlay();
@@ -396,7 +393,6 @@ CHESSAPP.ui = (function () {
     if (src.nodeName.toLowerCase() == "a") {
       let val = src.getAttribute("data-pieceType");
       if (val) {
-        console.log("User selected " + val);
         promotion_data.pieceType = val;
         CHESSAPP.GamePlay.promote(promotion_data);
       }

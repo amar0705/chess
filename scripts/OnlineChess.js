@@ -44,7 +44,6 @@ CHESSAPP.onlinePlay = {
       type: "s",
       msg: "Move made, waiting for the partner to make the next move",
     });
-    console.log("Sending messsage");
   },
   sendChat: function (stg) {
     stg.local = false;
@@ -52,6 +51,5 @@ CHESSAPP.onlinePlay = {
   },
   handleMsg: function (e) {
     let resp = JSON.parse(e.data);
-    console.log(resp);
   },
 };
